@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
   // api/posts/?username="Sami"
   const username = req.query.username;
   const catName = req.query.cat;
+  const limit = Number(req.query.limit);
   try {
     let posts;
     if (username) {
@@ -26,6 +27,8 @@ router.get("/", async (req, res) => {
           $in: [catName],
         },
       });
+    } else if (limit) {
+      posts = await Post.find().limit(limit);
     } else {
       posts = await Post.find();
     }
@@ -44,7 +47,7 @@ router.post("/", async (req, res) => {
       body: req.body.body,
       username: req.body.username,
       photo: req.body.photo,
-      categories: req.body.categories,
+      categories: [...req.body.categories],
     });
     const newPost = await post.save();
     res.status(200).json(newPost);

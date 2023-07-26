@@ -8,13 +8,15 @@ const postRoute = require("./routes/post");
 const categoryRoute = require("./routes/category");
 const multer = require("multer");
 const cors = require("cors");
+const path = require("path");
 
 dotenv.config();
 app.use(express.json());
 app.use(cors());
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URL) //process is a global object
   .then(console.log("connected to Mongodb"))
   .catch((err) => console.log(err));
 
