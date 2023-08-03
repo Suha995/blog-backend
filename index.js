@@ -10,6 +10,7 @@ const multer = require("multer");
 const cors = require("cors");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const { checkUser } = require("./middleware/authMiddleware");
 
 app.use(cookieParser());
 dotenv.config();
@@ -37,12 +38,7 @@ const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
-
-// app.get("/getcookie", (req, res) => {
-//   const token = req.cookies["jwt"];
-//   console.log(token);
-//   res.send("great");
-// });
+// app.get("*", checkUser); // apply check user to every single get route
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);

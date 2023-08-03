@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
-const { verifyToken } = require("../middleware/verifyToken");
+const { verifyToken } = require("../middleware/authMiddleware");
 
 //get Post
 router.get("/:id", async (req, res) => {
@@ -13,7 +13,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //get all posts
-router.get("/", verifyToken, async (req, res) => {
+router.get("/", async (req, res) => {
   // api/posts/?username="Sami"
   const username = req.query.username;
   const catName = req.query.cat;
