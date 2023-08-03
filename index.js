@@ -9,11 +9,13 @@ const categoryRoute = require("./routes/category");
 const multer = require("multer");
 const cors = require("cors");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 
+app.use(cookieParser());
 dotenv.config();
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: "http://localhost:8000", withCredentials: true }));
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
 mongoose
@@ -36,6 +38,11 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
 
+// app.get("/getcookie", (req, res) => {
+//   const token = req.cookies["jwt"];
+//   console.log(token);
+//   res.send("great");
+// });
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
