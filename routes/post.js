@@ -15,13 +15,13 @@ router.get("/:id", async (req, res) => {
 //get all posts
 router.get("/", async (req, res) => {
   // api/posts/?username="Sami"
-  const username = req.query.username;
+  const email = req.query.email;
   const catName = req.query.cat;
   const limit = Number(req.query.limit);
   try {
     let posts;
-    if (username) {
-      posts = await Post.find({ username: username });
+    if (email) {
+      posts = await Post.find({ email: email });
     } else if (catName) {
       posts = await Post.find({
         categories: {
@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
       title: req.body.title,
       desc: req.body.desc,
       body: req.body.body,
-      username: req.body.username,
+      email: req.body.email,
       photo: req.body.photo,
       categories: [...req.body.categories],
     });
@@ -61,7 +61,7 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (post.username === req.body.username) {
+    if (post.email === req.body.email) {
       try {
         const newPost = await Post.findByIdAndUpdate(
           req.params.id,
@@ -86,7 +86,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (post.username === req.body.username) {
+    if (post.email === req.body.email) {
       try {
         await Post.findByIdAndDelete(req.params.id);
         res.status(200).json("Post has been deleted");

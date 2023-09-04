@@ -47,7 +47,7 @@ router.post("/register", async (req, res) => {
       httpOnly: true,
     });
 
-    res.status(201).json({ user });
+    res.status(201).json(user);
   } catch (err) {
     console.log(err.message);
     const errors = handleErrors(err);

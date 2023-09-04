@@ -16,8 +16,8 @@ app.use(cookieParser());
 dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "http://localhost:8000", withCredentials: true }));
 app.use("/images", express.static(path.join(__dirname, "/images")));
+app.use(cors({ origin: "http://localhost:8000", withCredentials: true }));
 
 mongoose
   .connect(process.env.MONGO_URL) //process is a global object
